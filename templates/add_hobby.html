@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agregar Hobby</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="dark-theme">
+  <div class="container">
+    <header>
+      <h1>Agregar un nuevo Hobby</h1>
+    </header>
+
+    <!-- Mensajes Flash -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Formulario único y corregido -->
+    <form action="{{ url_for('add_hobby') }}" method="post">
+      <div class="form-group">
+        <label for="description">Hobby:</label>
+        <input type="text" id="description" name="description" required />
+      </div>
+
+      <div class="form-group">
+        <label for="level">Nivel de habilidad:</label>
+        <select id="level" name="level" required>
+          <option value="Principiante">Principiante</option>
+          <option value="Intermedio">Intermedio</option>
+          <option value="Avanzado">Avanzado</option>
+          <option value="Experto">Experto</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="percentage">Porcentaje de dedicación (%):</label>
+        <input type="number" id="percentage" name="percentage" min="0" max="100" required />
+      </div>
+
+      <button class="btn-primary" type="submit">Agregar Hobby</button>
+    </form>
+  </div>
+</body>
+</html>

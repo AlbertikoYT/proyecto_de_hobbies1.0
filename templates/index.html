@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="dark-theme">
+  <div class="container">
+
+    <!-- Mensajes Flash -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Bienvenida personalizada -->
+    <header class="dashboard-header">
+      <h1>Bienvenido, {{ nombre }}</h1>
+    </header>
+
+    <!-- Lista de hobbies -->
+    <section class="hobbies-list">
+      <h2>Tus Hobbies</h2>
+      {% if hobbies %}
+        <ul>
+          {% for hobby in hobbies %}
+            <li>
+              <strong>{{ hobby.description }}</strong> — Nivel: {{ hobby.level }} — Dedicación: {{ hobby.percentage }}%
+              <form action="{{ url_for('delete_hobby', id=hobby._id) }}" method="post" style="display:inline;">
+                <button class="btn-delete" type="submit">Eliminar</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No tienes hobbies agregados.</p>
+      {% endif %}
+    </section>
+
+<nav class="dashboard-actions" style="margin-top: 100px;">
+  <a href="{{ url_for('add_hobby') }}" class="btn-primary" style="margin-right: 30px;">Agregar Hobby</a>
+  <a href="{{ url_for('logout') }}" class="btn-secondary">Cerrar sesión</a>
+</nav>
+
+
+  </div>
+</body>
+</html>
